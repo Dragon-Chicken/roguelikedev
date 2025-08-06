@@ -37,6 +37,9 @@ int initengine() {
 
   bkgd(COLOR_PAIR(2));
   wbkgd(mainwin, COLOR_PAIR(1));
+
+  drawengine(); // have to call to remove that blank start frame
+
   refresh();
   wrefresh(mainwin);
 

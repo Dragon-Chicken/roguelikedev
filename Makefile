@@ -1,5 +1,5 @@
 build:
-	gcc -Wall *.c -o game -lncurses
+	gcc -Wall src/*.c -o game -lncurses
 run:
 	./game
 clean:

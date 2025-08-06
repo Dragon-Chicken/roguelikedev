@@ -4,7 +4,7 @@
 typedef struct Entity {
   int x;
   int y;
-  char symb; // symbol for the entity
+  char ch; // symbol for the entity
   // TO ADD COLOR
 } Entity;
 

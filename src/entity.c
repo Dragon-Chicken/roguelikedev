@@ -12,10 +12,10 @@
 Entity *entities[100]; // << this NEEDS to be allocated dynamically
 int entityindex = 0;
 
-void entityinit(Entity *entity, int x, int y, char symb) {
+void entityinit(Entity *entity, int x, int y, char ch) {
   entity->x = x;
   entity->y = y;
-  entity->symb = symb;
+  entity->ch = ch;
 
   entities[entityindex] = entity;
   entityindex++;
@@ -31,7 +31,7 @@ void entitymove(Entity *entity, int dx, int dy) {
 }
 
 void entitydraw(Entity *entity, WINDOW *win) {
-  mvwprintw(win, entity->y, entity->x, "%c", entity->symb);
+  mvwprintw(win, entity->y, entity->x, "%c", entity->ch);
 
   return;
 }
