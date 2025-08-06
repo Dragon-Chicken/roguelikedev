@@ -1,54 +1,42 @@
 #include "engine.h"
 
-Vec2 player;
+Entity player;
+Entity npc;
 
 void updateengine() {
+
   switch (input) {
     case 'q':
       exitengine();
       break;
 
     case 'k':
-      player.y--;
+      entitymove(&player, 0, -1);
       break;
     case 'j':
-      player.y++;
+      entitymove(&player, 0, 1);
       break;
     case 'h':
-      player.x--;
+      entitymove(&player, -1, 0);
       break;
     case 'l':
-      player.x++;
+      entitymove(&player, 1, 0);
       break;
   }
-/*  if (checkkey('q')) {
-    exitengine();
-  }
-
-  if (checkkey(KEY_UP) || checkkey('k')) {
-    player.y -= 1;
-  }
-  if (checkkey(KEY_DOWN) || checkkey('j')) {
-    player.y += 1;
-  }
-  if (checkkey(KEY_LEFT) || checkkey('h')) {
-    player.x -= 1;
-  }
-  if (checkkey(KEY_RIGHT) || checkkey('l')) {
-    player.x += 1;
-  } */
 }
 
 void drawengine() {
-  mvwprintw(mainwin, player.y, player.x, "@");
+  entitydraw(&player, mainwin);
+  entitydraw(&npc, mainwin);
 }
 
 int main() {
-  player.x = 0;
-  player.y = 0;
+
+  entityinit(&npc, 10, 10, 'e');
+  entityinit(&player, 0, 0, '@');
 
   // sends everything off to the engine
-  initengine();
+  int ret = initengine();
 
   exitengine();
 

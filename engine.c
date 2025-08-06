@@ -12,19 +12,27 @@ bool checkkey(int key) {
 }
 
 // start ncurses
-void initengine() {
+int initengine() {
+  /* init ncurses and input */
   initscr();
 
   raw(); // gives complete raw input
   noecho();
   keypad(stdscr, TRUE); // adds arrow key support... D:
 
-  start_color();
-  init_pair(1, COLOR_WHITE, COLOR_BLACK);
-  init_pair(2, COLOR_BLACK, COLOR_WHITE);
-
   curs_set(0); // disable the cursor
 
+  /* colors */
+  if (!has_colors()) {
+    printf("Terminal does not support colours");
+    return 1;
+  }
+
+  start_color();
+  init_pair(1, COLOR_BLACK, COLOR_WHITE);
+  init_pair(2, COLOR_WHITE, COLOR_BLACK);
+
+  /* windows and window color inits */
   mainwin = newwin(50, 80, 0, 0);
 
   bkgd(COLOR_PAIR(2));
@@ -50,6 +58,8 @@ void initengine() {
     refresh();
     wrefresh(mainwin);
   }
+
+  return 0;
 }
 
 // end ncurses and other things

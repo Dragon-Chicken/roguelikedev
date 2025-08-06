@@ -1,5 +1,6 @@
 #include <ncurses.h>
 #include <stdbool.h>
+#include "entity.h"
 
 #ifndef ENGINE_H
 #define ENGINE_H
@@ -13,7 +14,7 @@ typedef struct Vec2 {
 } Vec2;
 
 // start ncurses
-void initengine();
+int initengine();
 
 // end ncurses and other things
 void exitengine();
