@@ -3,7 +3,18 @@
 Entity player;
 Entity npc;
 
-void updateengine() {
+Gamemap gamemap;
+
+void initgame() {
+  entityinit(&player, 0, 0, '@', COLOR_WHITE, COLOR_BLACK);
+  entityinit(&npc, 10, 10, 'e', COLOR_YELLOW, COLOR_BLACK);
+
+  setbgcolor(stdscr, COLOR_BLACK, COLOR_RED);
+
+  gamemapinit(&gamemap, 60, 40);
+}
+
+void updategame() {
 
   switch (input) {
     case 'q':
@@ -25,19 +36,15 @@ void updateengine() {
   }
 }
 
-void drawengine() {
+void drawgame() {
+
+  gamemapdraw(&gamemap, mainwin);
+
   entitydraw(&player, mainwin);
   entitydraw(&npc, mainwin);
 }
 
 int main() {
-  initengine();
-
-  entityinit(&player, 0, 0, '@', COLOR_WHITE, COLOR_BLACK);
-  entityinit(&npc, 10, 10, 'e', COLOR_YELLOW, COLOR_BLACK);
-
-  setbgcolor(stdscr, COLOR_BLACK, COLOR_RED);
-
   // sends the flow off to the engine
   int ret = handoffengine();
   exitengine();

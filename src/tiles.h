@@ -5,8 +5,7 @@
 
 typedef struct Graphic {
   char ch;
-  int fg;
-  int bg;
+  int color;
 } Graphic;
 
 typedef struct Tile {
@@ -15,6 +14,6 @@ typedef struct Tile {
   Graphic dark;
 } Tile;
 
-Tile new_tile(bool walkable, bool transparent, char ch, int fg, int bg);
+Tile newtile(bool walkable, bool transparent, char ch, int fg, int bg);
 
 #endif

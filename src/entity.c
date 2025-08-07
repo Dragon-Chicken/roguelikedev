@@ -20,21 +20,15 @@ void entityinit(Entity *entity, int x, int y, char ch, int fg, int bg) {
 
   //entities[entityindex] = entity;
   //entityindex++;
-
-  return;
 }
 
 void entitymove(Entity *entity, int dx, int dy) {
   entity->x += dx;
   entity->y += dy;
-
-  return;
 }
 
 void entitydraw(Entity *entity, WINDOW *win) {
   wattron(win, COLOR_PAIR(entity->color));
   mvwprintw(win, entity->y, entity->x, "%c", entity->ch);
   wattroff(win, COLOR_PAIR(entity->color));
-
-  return;
 }

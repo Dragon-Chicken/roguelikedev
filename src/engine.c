@@ -8,15 +8,15 @@ int input = 0;
 bool isrunning = true;
 
 /* internal funcs */
-int initengine() {
+int initcall() {
   // init ncurses and input
   initscr();
 
-  raw(); // gives complete raw input
+  raw();
   noecho();
-  keypad(stdscr, TRUE); // adds arrow key support... D:
+  keypad(stdscr, TRUE); // arrow keys are never used lol
 
-  curs_set(0); // disable the cursor
+  curs_set(0);
 
   // creates maingame window
   mainwin = newwin(50, 80, 0, 0);
@@ -35,13 +35,15 @@ int initengine() {
     }
   }
 
+  initgame();
+
   return 0;
 }
 
 int updatecall() {
   // upcate call
   input = getch();
-  updateengine();
+  updategame();
 
   return 0;
 }
@@ -51,7 +53,7 @@ int drawcall() {
   clear();
   wclear(mainwin);
   
-  drawengine();
+  drawgame();
 
   refresh();
   wrefresh(mainwin);
@@ -81,6 +83,7 @@ void setbgcolor(WINDOW *win, int fg, int bg) {
 
 // hands off the loop from main() to the engine
 int handoffengine() {
+  initcall();
 
   drawcall(); // need to do one draw call at the start
 

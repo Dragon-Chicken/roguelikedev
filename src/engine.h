@@ -1,6 +1,9 @@
 #include <ncurses.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include "entity.h"
+#include "tiles.h"
+#include "gamemap.h"
 
 #ifndef ENGINE_H
 #define ENGINE_H
@@ -13,17 +16,17 @@ typedef struct Vec2 {
   int y;
 } Vec2;
 
-int initengine();
-
 // hands off main loop to the engine
 int handoffengine();
 
 // end ncurses and other things
 void exitengine();
 
-// both are NOT defined by the engine
-void updateengine();
-void drawengine();
+// these NOT defined by the engine
+// they ARE called by the engine
+void initgame();
+void updategame();
+void drawgame();
 
 bool checkkey(int key);
 
