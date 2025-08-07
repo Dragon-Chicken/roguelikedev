@@ -8,7 +8,7 @@ int input = 0;
 bool isrunning = true;
 
 /* internal funcs */
-int initcall() {
+int initengine() {
   // init ncurses and input
   initscr();
 
@@ -74,14 +74,13 @@ int getcolorindex(int fg, int bg) {
   return indexofcolor;
 }
 
-void setbgcolor(int fg, int bg) {
-  bkgd(COLOR_PAIR(getcolorindex(fg, bg)));
+void setbgcolor(WINDOW *win, int fg, int bg) {
+  wbkgd(win, COLOR_PAIR(getcolorindex(fg, bg)));
   return;
 }
 
 // hands off the loop from main() to the engine
 int handoffengine() {
-  initcall();
 
   drawcall(); // need to do one draw call at the start
 

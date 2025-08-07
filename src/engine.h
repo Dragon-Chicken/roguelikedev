@@ -13,6 +13,8 @@ typedef struct Vec2 {
   int y;
 } Vec2;
 
+int initengine();
+
 // hands off main loop to the engine
 int handoffengine();
 
@@ -27,6 +29,6 @@ bool checkkey(int key);
 
 // color stuff
 int getcolorindex(int fg, int bg);
-void setbgcolor(int fg, int bg);
+void setbgcolor(WINDOW *win, int fg, int bg);
 
 #endif
