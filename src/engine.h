@@ -13,8 +13,8 @@ typedef struct Vec2 {
   int y;
 } Vec2;
 
-// start ncurses
-int initengine();
+// hands off main loop to the engine
+int handoffengine();
 
 // end ncurses and other things
 void exitengine();
@@ -24,5 +24,9 @@ void updateengine();
 void drawengine();
 
 bool checkkey(int key);
+
+// color stuff
+int getcolorindex(int fg, int bg);
+void setbgcolor(int fg, int bg);
 
 #endif

@@ -4,13 +4,13 @@
 typedef struct Entity {
   int x;
   int y;
-  char ch; // symbol for the entity
-  // TO ADD COLOR
+  char ch;
+  int color;
 } Entity;
 
 // maybe a better idea would be to call malloc instead of passing around structs?
 // or better yet just use a pointer?
-void entityinit(Entity *entity, int x, int y, char symb);
+void entityinit(Entity *entity, int x, int y, char symb, int fg, int bg);
 
 void entitymove(Entity *entity, int dx, int dy);
 

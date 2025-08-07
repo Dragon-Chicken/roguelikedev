@@ -32,13 +32,16 @@ void drawengine() {
 
 int main() {
 
-  entityinit(&npc, 10, 10, 'e');
-  entityinit(&player, 0, 0, '@');
+  entityinit(&player, 0, 0, '@', COLOR_WHITE, COLOR_BLACK);
+  entityinit(&npc, 10, 10, 'e', COLOR_YELLOW, COLOR_BLACK);
 
-  // sends everything off to the engine
-  int ret = initengine();
-
+  // sends the flow off to the engine
+  int ret = handoffengine();
   exitengine();
+
+  if (ret != 0) {
+    printf("Error: %d", ret);
+  }
 
   return 0;
 }

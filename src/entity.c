@@ -12,13 +12,14 @@
 Entity *entities[100]; // << this NEEDS to be allocated dynamically
 int entityindex = 0;
 
-void entityinit(Entity *entity, int x, int y, char ch) {
+void entityinit(Entity *entity, int x, int y, char ch, int fg, int bg) {
   entity->x = x;
   entity->y = y;
   entity->ch = ch;
+  entity->color = getcolorindex(fg, bg);
 
-  entities[entityindex] = entity;
-  entityindex++;
+  //entities[entityindex] = entity;
+  //entityindex++;
 
   return;
 }
@@ -31,7 +32,9 @@ void entitymove(Entity *entity, int dx, int dy) {
 }
 
 void entitydraw(Entity *entity, WINDOW *win) {
+  wattron(win, COLOR_PAIR(entity->color));
   mvwprintw(win, entity->y, entity->x, "%c", entity->ch);
+  wattroff(win, COLOR_PAIR(entity->color));
 
   return;
 }
