@@ -30,8 +30,7 @@ int initcall() {
 
   for (int fg = 0; fg <= 7; fg++) {
     for (int bg = 0; bg <= 7; bg++) {
-      // yes I know this is not the best way to do this but I don't care.
-      init_pair(fg + (bg * 10), fg, bg);
+      init_pair(fg + (8 * bg), fg, bg);
     }
   }
 
@@ -71,7 +70,7 @@ bool checkkey(int key) {
 }
 
 int getcolorindex(int fg, int bg) {
-  int indexofcolor = fg + (bg * 10);
+  int indexofcolor = fg + (8 * bg);
 
   return indexofcolor;
 }
