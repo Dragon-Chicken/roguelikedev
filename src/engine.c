@@ -1,102 +1,60 @@
 #include "engine.h"
 
-/* external vars */
-WINDOW *mainwin;
-int input = 0;
+void engine_drawch(WINDOW *win, int ch, int x, int y, int color) {
+  wattron(win, COLOR_PAIR(color));
+  mvwprintw(win, y, x, "%c", ch);
+  wattroff(win, COLOR_PAIR(color));
+}
 
-/* internal vars */
-bool isrunning = true;
+void engine_main() {
 
-/* internal funcs */
-int initcall() {
-  // init ncurses and input
+  Engine engine;
+
+  engine_init(&engine);
+
+  while (engine.running) {
+    engine_draw(&engine);
+    engine_update(&engine);
+  }
+
+  engine_exit(&engine);
+}
+
+void engine_init(Engine *engine) {
+  // ncurses
   initscr();
-
   raw();
   noecho();
-  keypad(stdscr, TRUE); // arrow keys are never used lol
-
+  keypad(stdscr, TRUE);
   curs_set(0);
 
-  // creates maingame window
-  mainwin = newwin(50, 80, 0, 0);
-
-  // colors
-  if (!has_colors()) {
-    printf("Terminal does not support colours");
-    return 1;
-  }
   start_color();
-
-  for (int fg = 0; fg <= 7; fg++) {
-    for (int bg = 0; bg <= 7; bg++) {
-      init_pair(fg + (8 * bg), fg, bg);
+  for (int fg = 0; fg < 8; fg++) {
+    for (int bg = 0; bg < 8; bg++) {
+      init_pair(COMBINE_COLORS(fg, bg), fg, bg);
     }
   }
 
-  initgame();
+  engine->running = true;
+  engine->input = 0;
 
-  return 0;
+  init(engine);
 }
 
-int updatecall() {
-  // upcate call
-  input = getch();
-  updategame();
+void engine_update(Engine *engine) {
+  engine->input = getch();
 
-  return 0;
+  update(engine);
 }
 
-int drawcall() {
-  // draw call
+void engine_draw(Engine *engine) {
   clear();
-  wclear(mainwin);
-  
-  drawgame();
+
+  draw(engine);
 
   refresh();
-  wrefresh(mainwin);
-
-  return 0;
 }
 
-
-/* external funcs */
-bool checkkey(int key) {
-  if (input == key) {
-    return true;
-  }
-  return false;
-}
-
-int getcolorindex(int fg, int bg) {
-  int indexofcolor = fg + (8 * bg);
-
-  return indexofcolor;
-}
-
-void setbgcolor(WINDOW *win, int fg, int bg) {
-  wbkgd(win, COLOR_PAIR(getcolorindex(fg, bg)));
-  return;
-}
-
-// hands off the loop from main() to the engine
-int handoffengine() {
-  initcall();
-
-  drawcall(); // need to do one draw call at the start
-
-  while (isrunning) {
-    updatecall();
-
-    drawcall();
-  }
-
-  return 0;
-}
-
-// end ncurses and other things
-void exitengine() {
-  isrunning = false;
+void engine_exit(Engine *engine) {
   endwin();
 }

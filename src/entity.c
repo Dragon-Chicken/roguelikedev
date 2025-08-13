@@ -1,34 +1,12 @@
 #include "engine.h"
 
-// ok so this is a really bad idea...
-// it firstly allows the engine to add an entity more than once to this array
-// next is that if an entity is deleted the pointer will still remain...
-// I say just let the user draw the entities
-//
-// another way is to have an array of entities (not pointers)
-// each time entityinit is called it returns a pointer to one of them
-// and have a stack with indexes of free entities?
-// though... it still needs dynamic allocation
-Entity *entities[100]; // << this NEEDS to be allocated dynamically
-int entityindex = 0;
-
-void entityinit(Entity *entity, int x, int y, char ch, int fg, int bg) {
+void entity_init(Entity *entity, char ch, int x, int y, int fg, int bg) {
+  entity->ch = ch;
   entity->x = x;
   entity->y = y;
-  entity->ch = ch;
-  entity->color = getcolorindex(fg, bg);
-
-  //entities[entityindex] = entity;
-  //entityindex++;
+  entity->color = COMBINE_COLORS(fg, bg);
 }
 
-void entitymove(Entity *entity, int dx, int dy) {
-  entity->x += dx;
-  entity->y += dy;
-}
-
-void entitydraw(Entity *entity, WINDOW *win) {
-  wattron(win, COLOR_PAIR(entity->color));
-  mvwprintw(win, entity->y, entity->x, "%c", entity->ch);
-  wattroff(win, COLOR_PAIR(entity->color));
+void entity_draw(Entity *entity, WINDOW *win) {
+  engine_drawch(win, entity->ch, entity->x, entity->y, entity->color);
 }

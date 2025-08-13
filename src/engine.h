@@ -1,37 +1,30 @@
 #include <ncurses.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include "entity.h"
-#include "tiles.h"
-#include "gamemap.h"
+#include "map.h"
 
 #ifndef ENGINE_H
 #define ENGINE_H
 
-extern WINDOW *mainwin;
-extern int input;
+#define COMBINE_COLORS(a, b) (a + (b * 8))
 
-typedef struct Vec2 {
-  int x;
-  int y;
-} Vec2;
+typedef struct Engine {
+  bool running;
+  int input;
+} Engine;
 
-// hands off main loop to the engine
-int handoffengine();
+void engine_main();
 
-// end ncurses and other things
-void exitengine();
+void engine_init(Engine *engine);
+void engine_update(Engine *engine);
+void engine_draw(Engine *engine);
 
-// these NOT defined by the engine
-// they ARE called by the engine
-void initgame();
-void updategame();
-void drawgame();
+void engine_exit(Engine *engine);
 
-bool checkkey(int key);
+void init(Engine *engine);
+void update(Engine *engine);
+void draw(Engine *engine);
 
-// color stuff
-int getcolorindex(int fg, int bg);
-void setbgcolor(WINDOW *win, int fg, int bg);
+void engine_drawch(WINDOW *win, int ch, int x, int y, int color);
 
 #endif

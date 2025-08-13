@@ -1,19 +1,16 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+#include "engine.h"
+
 typedef struct Entity {
+  char ch;
   int x;
   int y;
-  char ch;
   int color;
 } Entity;
 
-// maybe a better idea would be to call malloc instead of passing around structs?
-// or better yet just use a pointer?
-void entityinit(Entity *entity, int x, int y, char symb, int fg, int bg);
-
-void entitymove(Entity *entity, int dx, int dy);
-
-void entitydraw(Entity *entity, WINDOW *win);
+void entity_init(Entity *entity, char ch, int x, int y, int fg, int bg);
+void entity_draw(Entity *entity, WINDOW *win);
 
 #endif
