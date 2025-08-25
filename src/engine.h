@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "entity.h"
 #include "map.h"
+#include "procgen.h"
 
 #ifndef ENGINE_H
 #define ENGINE_H

@@ -29,6 +29,7 @@ void engine_init(Engine *engine) {
   curs_set(0);
 
   start_color();
+
   for (int fg = 0; fg < 8; fg++) {
     for (int bg = 0; bg < 8; bg++) {
       init_pair(COMBINE_COLORS(fg, bg), fg, bg);

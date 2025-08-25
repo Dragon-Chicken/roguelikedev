@@ -1,19 +1,28 @@
 #include "engine.h"
 
 Entity player;
-Map mainmap;
+Entity npc;
+
 Tile floor_tile;
 Tile wall_tile;
+Map mainmap;
+
+enum {
+  floor,
+  wall
+};
 
 void player_move(Entity *player, Map *map, int dx, int dy) {
   //printf("x%dy%di%d ", player->x, player->y, player->x + (player->y * map->width));
-  if (player->x + dx < 0 || player->x + dx >= map->width) {
+
+  // if in bounds x and y
+  if (player->x + dx < 0 || player->x + dx >= map->width ||
+      player->y + dy < 0 || player->y + dy >= map->height) {
     return;
   }
-  if (player->y + dy < 0 || player->y + dy >= map->height) {
-    return;
-  }
-  if (map->tiles[player->x + dx + ((player->y + dy) * map->width)].walk == false) {
+
+  // if next tile is not walkable
+  if (tile_get(map, player->x + dx, player->y + dy).walk == false) {
     return;
   }
 
@@ -22,15 +31,16 @@ void player_move(Entity *player, Map *map, int dx, int dy) {
 }
 
 void init(Engine *engine) {
-  entity_init(&player, '@', 0, 0, COLOR_YELLOW, COLOR_BLUE);
-  tile_init(&floor_tile, ' ', COLOR_WHITE, COLOR_BLUE, true, true);
-  tile_init(&wall_tile, '#', COLOR_RED, COLOR_BLUE, false, false);
-  map_init(&mainmap, 80, 45);
-  map_fill(&mainmap, &floor_tile);
+  entity_init(&player, '@', 0, 0, COLOR_WHITE, COLOR_BLUE);
+  entity_init(&npc, '@', 0, 0, COLOR_YELLOW, COLOR_BLUE);
 
-  mainmap.tiles[30 + 22 * mainmap.width] = wall_tile;
-  mainmap.tiles[31 + 22 * mainmap.width] = wall_tile;
-  mainmap.tiles[32 + 22 * mainmap.width] = wall_tile;
+  tile_init(&floor_tile, ' ', COLOR_WHITE, COLOR_BLUE, true, true);
+  tile_init(&wall_tile, '#', COLOR_RED, COLOR_BLACK, false, false);
+
+  Tile tiletypes[2] = {floor_tile, wall_tile};
+
+  map_init(&mainmap, 80, 45, tiletypes, 2);
+  map_fill(&mainmap, floor);
 }
 
 void update(Engine *engine) {
@@ -56,6 +66,8 @@ void update(Engine *engine) {
 
 void draw(Engine *engine) {
   map_draw(&mainmap, stdscr);
+
+  entity_draw(&npc, stdscr);
   entity_draw(&player, stdscr);
 }
 
