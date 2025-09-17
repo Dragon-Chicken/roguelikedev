@@ -1,17 +1,19 @@
 #include <ncurses.h>
 #include <stdlib.h>
-#include "entity.h"
-#include "map.h"
-#include "procgen.h"
 
 #ifndef ENGINE_H
 #define ENGINE_H
+
+#include "entity.h"
+#include "map.h"
+#include "procgen.h"
 
 #define COMBINE_COLORS(a, b) (a + (b * 8))
 
 typedef struct Engine {
   bool running;
   int input;
+  LLnode head; // entity linked list head
 } Engine;
 
 void engine_main();

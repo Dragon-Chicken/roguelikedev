@@ -38,6 +38,8 @@ void engine_init(Engine *engine) {
 
   engine->running = true;
   engine->input = 0;
+  engine->head.data = NULL;
+  engine->head.next = NULL;
 
   init(engine);
 }

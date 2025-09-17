@@ -1,7 +1,6 @@
+#include "engine.h"
 #ifndef MAP_H
 #define MAP_H
-
-#include "engine.h"
 
 typedef struct Tile {
   char ch;
